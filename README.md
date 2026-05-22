@@ -1,4 +1,4 @@
-# VixEconomias — Documentação e API
+# VixEconomias — Documentação
 
 Plugin de economias infinitas para Bukkit/Spigot/Paper, com formatação configurável, top, tags, suporte a SQLite/MySQL e cache Redis opcional. Compatível com Minecraft 1.8.X a 1.21.X.
 
@@ -391,9 +391,32 @@ settings:
 
 Configurável em `config.yml > menu.top`:
 - Tamanho, slots dos players, items de cada slot
-- Botões: anterior/próximo/fechar
+- Botões: anterior/próximo/fechar (anterior e próxima aparecem condicionalmente — não aparecem na primeira página se ela não estiver lotada, e não aparece "próxima" na última página)
 - Item de fundo (filler) e item vazio
 - Suporta `PLAYER_HEAD` (1.13+) ou `SKULL_ITEM:3` (1.8-1.12) — adapter cuida disso
+
+### Cabeça do viewer (`viewer-head`)
+
+Item especial dentro do menu mostrando o jogador que abriu (não os do ranking).
+Exibe o nome, saldo na economia atual e a posição dele no top.
+
+```yaml
+menu:
+  top:
+    viewer-head:
+      enabled: true
+      slot: 4
+      material: "PLAYER_HEAD"
+      name: "&e{player}"
+      lore:
+        - "&7Saldo: &a{symbol}{value}"
+        - "&7Sua posição: &a#{position}"
+```
+
+Placeholders disponíveis: `{player}`, `{economy}`, `{symbol}`, `{value}`, `{position}`.
+
+Quando o jogador não está no top (bypass ou saldo zero), `{position}` vira o
+valor em `placeholders.viewer-no-rank` (default `—`).
 
 ---
 
